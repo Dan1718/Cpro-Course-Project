@@ -10,3 +10,15 @@ To see if the game has ended or not, we start with all the nodes that are at the
 -- wincheck.h wincheck.c -- for checking the win condition 
 -- logic.h logic.c -- validating pin position, making links, etc. -- will also define the node struct. 
 -- 
+
+
+
+Phase 1 Contains board being printed, alternating moves, input validation. The constraint that red can't place a peg on the side has not been handled since it's more of game logic. You can place pegs, invalid input error messages, etc. Game quitting is also not implemented as of now. 
+Daniel Vincent
+2025117004
+
+To run, 
+```
+make
+./twixt
+```
