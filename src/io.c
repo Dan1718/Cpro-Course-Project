@@ -43,7 +43,12 @@ void getTurn(char* colour, int* coords){
     }
     printf("\n");
     printf("Enter your choice %s player : ",colour); 
-    scanf("%d %d",coords,coords+1); 
+    if (scanf("%d %d",coords,coords+1)!=2){
+        printf("Invalid input!"); 
+        coords[0]=50;
+        coords[1]=50;
+        while (getchar()!='\n');
+    } 
     printf("\n Validating input...");
 }
 

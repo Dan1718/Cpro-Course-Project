@@ -1,5 +1,5 @@
 # ============================================================
-# Makefile for a simple calculator project
+# Makefile for CPRO Course Project - Spotify... (Not sure on the name yet)
 # ============================================================
 # This Makefile automates the process of compiling and linking
 # multiple C source files into a single executable.
@@ -10,7 +10,7 @@ CC = gcc
 
 # Compiler flags:
 # -Wall : enables all common warnings
-# -I./include : tells the compiler to look for header files in the 'include' folder
+# -I./include : tells the compiler to look forhttps://discord.com/shop header files in the 'include' folder
 # -g : includes debugging information (useful for gdb)
 CFLAGS = -Wall -I./include -g
 
@@ -23,7 +23,7 @@ SRCS = src/main.c src/io.c src/logic.c src/wincheck.c
 OBJS = $(SRCS:.c=.o)
 
 # The final name of the executable program
-TARGET = calculator
+TARGET = twixt
 
 # ============================================================
 # Default target: 'all'
