@@ -108,17 +108,20 @@ int linkPossible(Node board[24][24],int *c1,int *c2){
         }
         return 1; 
     }
-    else{return 0;}
+    else {return 0;}
 }
 
 void addLink(Node* node1, Node* node2){
+    for (int i = 0; i < 8; i++){
+        if (node1->links[i] == node2){return;}
+    }
     for (int i =0; 8>i;i++){
         if (node1->links[i]==NULL){
             node1->links[i]=node2;
+            return; 
         }
     }
 }
-
 
 void doMove(Node board[24][24],int coords[2],int player){
     board[coords[0]][coords[1]].colour = player; 
