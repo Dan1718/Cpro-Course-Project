@@ -27,13 +27,12 @@ int main(){
         getTurn(colour,coords);
         int valid = checkValid(board,coords); 
         if (valid){
+            
             doMove(board,coords,turn); 
             turn*=-1; 
             if (turn==-1){strncpy(colour,"Black",sizeof(colour));}
             else if (turn==1){strncpy(colour,"Red",sizeof(colour));}
-
             printBoard(board);
-
             int win_status = checkWin(board); 
             if (win_status==1){
                 win("Red");
