@@ -126,7 +126,7 @@ void addLink(Node* node1, Node* node2){
     }
 }
 
-void doMove(Node board[24][24],int coords[2],int player){
+void doMove(Node board[][24],int coords[2],int player){
     board[coords[0]][coords[1]].colour = player; 
     
     for (int i=-2; 2>=i; i++){
