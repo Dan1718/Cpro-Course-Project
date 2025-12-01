@@ -73,6 +73,9 @@ int linkInBounds(Node Board[24][24],int *center, int x,int y,int *indexes){ // T
     return flag; 
 }
 int linkPossible(Node board[24][24],int *c1,int *c2){
+    if (board[c1[0]][c1[1]].colour == 0){ return 0; }
+    if (board[c2[0]][c2[1]].colour == 0){ return 0; }
+
     if (board[c1[0]][c1[1]].colour!=board[c2[0]][c2[1]].colour){ return 0; }
     if ((abs(c1[0]-c2[0])==2&&abs(c1[1]-c2[1])==1)||(abs(c1[0]-c2[0])==1&&abs(c1[1]-c2[1])==2)){
         for (int i=-2; 2>=i; i++){
@@ -125,6 +128,7 @@ void addLink(Node* node1, Node* node2){
 
 void doMove(Node board[24][24],int coords[2],int player){
     board[coords[0]][coords[1]].colour = player; 
+    
     for (int i=-2; 2>=i; i++){
         for (int j=-2; 2>=j; j++){
             int temp[2] = {coords[0]+i,coords[1]+j};
