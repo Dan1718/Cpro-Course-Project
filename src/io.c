@@ -8,7 +8,7 @@ void printBoard(Node board[24][24]){
     for (int i =0; 24>i;i++){
         printf("%2d ",i);
         if (i==0||i==22){
-            printf("   ");
+            printf("  ");
         }
     }
     printf("\n");
@@ -18,8 +18,9 @@ void printBoard(Node board[24][24]){
             
             Node node = board[x][y];
             if (node.colour==0){printf(" . ");}
-            if (node.colour==1){printf(" %c ",Red);}
-            if (node.colour==-1){printf(" %c ",Black);}
+            else if (node.colour==1){printf(" %c ",Red);}
+            else if (node.colour==-1){printf(" %c ",Black);}
+            //else {printf(" %d ",node.colour);}
             if (y==0||y==22){printf(" | ");}
             
         }
@@ -49,7 +50,7 @@ void getTurn(char* colour, int* coords){
         coords[1]=50;
         while (getchar()!='\n');
     } 
-    printf("\n Validating input...");
+    printf("\n Validating input... \n");
 }
 
 void win(char* colour){

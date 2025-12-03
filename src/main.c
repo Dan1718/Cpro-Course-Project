@@ -2,7 +2,6 @@
 #include <stdlib.h> 
 #include "../include/logic.h"
 #include "../include/io.h"
-#include "../include/wincheck.h"
 #include <string.h> 
 
 int main(){
@@ -15,10 +14,10 @@ int main(){
         }
     }
     int turn = 1; 
+    printBoard(board);
     while(1){
 
 
-        printBoard(board);
         char colour[10];
         if (turn==-1){strncpy(colour,"Black",sizeof(colour));}
         else if (turn==1){strncpy(colour,"Red",sizeof(colour));}
@@ -26,20 +25,24 @@ int main(){
         int coords[2]; 
         getTurn(colour,coords);
         int valid = checkValid(board,coords); 
+        if ((turn==-1&&coords[0]==0)||(turn==-1&&coords[0]==23)){valid=0;printf("Invalid input, You cannot place a peg in the opponents side row.\n");}
+        if ((turn==1&&coords[1]==0)||(turn==1&&coords[1]==23)){valid=0;printf("Invalid input, You cannot place a peg in the opponents side row.\n");}
         if (valid){
-            
-            doMove(board,coords,turn); 
-            turn*=-1; 
-            if (turn==-1){strncpy(colour,"Black",sizeof(colour));}
-            else if (turn==1){strncpy(colour,"Red",sizeof(colour));}
-            printBoard(board);
-            int win_status = checkWin(board); 
-            if (win_status==1){
+            int flag = doMove(board,coords,turn); 
+            int win_status = flag; 
+            if (win_status!=0&&turn==1){
+                printBoard(board);
                 win("Red");
+                break; 
             }
-            else if (win_status==-1){
+            else if (win_status!=0&&turn==1){
+                printBoard(board);
                 win("Black");
+                break; 
             }
+            turn*=-1; 
+            printBoard(board);
+
         }
         else{
 

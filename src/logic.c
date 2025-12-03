@@ -11,6 +11,20 @@ Node createNode(int x,int y,int uid){
     new_node.x = x; 
     new_node.colour=0; 
     new_node.y = y; 
+    new_node.state = 0; 
+
+    if (x==0&&y!=0){
+        new_node.state=1; 
+    }
+    else if (y==0&&x!=0){
+        new_node.state=2; 
+    }
+    else if (x==23&&y!=23){
+        new_node.state=-1;
+    }
+    else if (x!=23&&y==23){
+        new_node.state=-2;
+    }
     for (int i =0;8>i;i++){
         new_node.links[i]=NULL; 
     }
@@ -24,13 +38,16 @@ int checkValid(Node board[24][24],int coords[2]){
         printf("Invalid input, please enter coordinates within 0,0 and 24,24!! \n");
         return 0; 
     }
+    if ((x==0&&y==0)||(x==23&&y==0)||(x==0&&y==23)||(x==23&&y==23)){printf("Cant place on corner peg!!");}
     else if (board[x][y].colour!=0){
         printf("The coordinate you are trying to place your peg at already has a peg!! \n");
         return 0; 
     }
     else{
+
         return 1; 
     }
+    
 }
 
 
@@ -114,32 +131,63 @@ int linkPossible(Node board[24][24],int *c1,int *c2){
     else {return 0;}
 }
 
-void addLink(Node* node1, Node* node2){
+int changeState(Node *node,int new_state){
+    int flag =0; 
+    node->state = new_state; 
+    for (int i=0;8>i;i++){
+        if(node->links[i]!=NULL){
+            Node* diffNode = node->links[i]; 
+            if (diffNode->state!=new_state){
+                if(diffNode->state!=0){
+                    flag =1; 
+                }
+                else {
+                    changeState(diffNode,new_state); 
+                }
+            }
+        }
+    }
+    return flag; 
+}
+
+int addLink(Node* node1, Node* node2){
+    int flag =0; 
     for (int i = 0; i < 8; i++){
-        if (node1->links[i] == node2){return;}
+        if (node1->links[i] == node2){break;}
     }
     for (int i =0; 8>i;i++){
         if (node1->links[i]==NULL){
             node1->links[i]=node2;
-            return; 
+            if (node2->state!=00&&node2->state==-(node1->state)){
+                flag = 1; 
+            }
+            break;
         }
     }
+    if (node1->state!=node2->state&&node1->state+node2->state!=0){
+        int new_state = node1->state + node2->state; 
+        flag +=changeState(node1, new_state);
+        flag += changeState(node2, new_state);
+    }
+    return flag; 
 }
 
-void doMove(Node board[][24],int coords[2],int player){
+int doMove(Node board[][24],int coords[2],int player){
+    int win_flag = 0; 
     board[coords[0]][coords[1]].colour = player; 
-    
     for (int i=-2; 2>=i; i++){
         for (int j=-2; 2>=j; j++){
             int temp[2] = {coords[0]+i,coords[1]+j};
             if (temp[0]>=0&&temp[1]>=0&&temp[0]<24&&temp[1]<24){            
                 int possible = linkPossible(board, coords, temp);
                 if (possible){
-                    addLink(&board[coords[0]][coords[1]], &board[temp[0]][temp[1]]);
-                    addLink(&board[temp[0]][temp[1]], &board[coords[0]][coords[1]]);
-
+                    win_flag = addLink(&board[coords[0]][coords[1]], &board[temp[0]][temp[1]]);
+                    win_flag = addLink(&board[temp[0]][temp[1]], &board[coords[0]][coords[1]]);
+                    printf("Added a link!\n");
                 }
             }
         }
     }
+    
+    return win_flag; 
 }

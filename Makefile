@@ -16,7 +16,7 @@ CFLAGS = -Wall -I./include -g
 
 # List of all source files (.c files)
 # These are located in the 'src' directory
-SRCS = src/main.c src/io.c src/logic.c src/wincheck.c
+SRCS = src/main.c src/io.c src/logic.c 
 
 # Object files (.o) will be generated for each source file
 # The substitution rule below replaces every ".c" with ".o"
